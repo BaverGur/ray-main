@@ -1,0 +1,587 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ray\n"
+"POT-Creation-Date: 2021-09-13 17:04+0700\n"
+"PO-Revision-Date: 2021-09-13 21:55+0900\n"
+"Last-Translator: \n"
+"Language-Team: GearUp Solution\n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.2\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-KeywordsList: __;trans\n"
+"X-Poedit-SearchPath-0: app\n"
+"X-Poedit-SearchPath-1: resources/views\n"
+
+#: resources/views/user_categories/save.twig:56
+#: resources/views/user_categories/search.twig:19
+msgid "Add"
+msgstr "追加"
+
+#: resources/views/item_list.twig:25
+msgid "Add Bookmark"
+msgstr "ブックマークに追加"
+
+#: resources/views/layouts/admin.twig:52
+#: resources/views/user_categories/save.twig:5
+#: resources/views/user_categories/save.twig:37
+msgid "Add Category"
+msgstr "カテゴリー追加"
+
+#: resources/views/layouts/admin.twig:84
+msgid "Add User"
+msgstr "ユーザーを追加"
+
+#: resources/views/layouts/admin.twig:48 resources/views/layouts/admin.twig:51
+#: resources/views/user_categories/search.twig:5
+#: resources/views/user_categories/search.twig:14
+msgid "Categories"
+msgstr "カテゴリー一覧"
+
+#: resources/views/product/edit.twig:68 resources/views/product/waiting.twig:39
+#: resources/views/user_categories/save.twig:45
+msgid "Category"
+msgstr "カテゴリー"
+
+#: resources/views/users/save.twig:44 resources/views/users/search.twig:19
+msgid "Create"
+msgstr "作成"
+
+#: resources/views/users/save.twig:5 resources/views/users/save.twig:14
+msgid "Create User"
+msgstr "ユーザーを作成"
+
+#: resources/views/item_list.twig:61 resources/views/product/waiting.twig:49
+msgid "Created At"
+msgstr "作成日"
+
+#: resources/views/user_categories/save.twig:60
+#: resources/views/users/save.twig:48
+msgid "Delete"
+msgstr "削除"
+
+#: resources/views/user_categories/search.twig:36
+#: resources/views/users/search.twig:40
+msgid "Edit"
+msgstr "編集"
+
+#: resources/views/user_categories/save.twig:5
+#: resources/views/user_categories/save.twig:37
+msgid "Edit Category"
+msgstr "カテゴリーの編集"
+
+#: resources/views/users/save.twig:5 resources/views/users/save.twig:14
+msgid "Edit User"
+msgstr "ユーザー編集"
+
+#: resources/views/settings.twig:24 resources/views/users/save.twig:22
+#: resources/views/users/search.twig:30
+msgid "Email"
+msgstr "メール"
+
+#: resources/views/login.twig:21
+msgid "Email address"
+msgstr "メールアドレス"
+
+#: resources/views/import/keyword.twig:14
+msgid "Enter Keyword"
+msgstr "キーワードを入力してください。"
+
+#: resources/views/import/product-link.twig:14
+msgid "Enter Product Link"
+msgstr "商品リンクを入力してください。"
+
+#: resources/views/import/search-link.twig:14
+msgid "Enter Search Link"
+msgstr "検索リンクを入力してください。"
+
+#: resources/views/settings.twig:22
+msgid "General"
+msgstr "General"
+
+#: resources/views/dashboard.twig:3 resources/views/layouts/admin.twig:38
+#: resources/views/product/waiting.twig:3
+msgid "Home"
+msgstr "Home"
+
+#: resources/views/item_list.twig:44 resources/views/product/waiting.twig:34
+msgid "ID"
+msgstr "ID"
+
+#: resources/views/import/keyword.twig:28
+#: resources/views/import/product-link.twig:27
+msgid "Import"
+msgstr "インポート"
+
+#: resources/views/import/keyword.twig:5
+msgid "Import Via Keyword"
+msgstr "キーワードにて検索結果の収集"
+
+#: resources/views/import/product-link.twig:5
+#: resources/views/import/search-link.twig:5
+msgid "Import Via Product Link"
+msgstr "商品直リンページから収集"
+
+#: resources/views/layouts/admin.twig:67
+msgid "Import via Keyword"
+msgstr "キーワードにて検索結果の収集"
+
+#: resources/views/layouts/admin.twig:65
+msgid "Import via Product Link"
+msgstr "商品直リンページから収集"
+
+#: resources/views/layouts/admin.twig:66
+msgid "Import via Search Link"
+msgstr "検索結果を元に収集（URL）"
+
+#: resources/views/item_list.twig:50
+msgid "JAN Code"
+msgstr "JANコード"
+
+#: resources/views/import/keyword.twig:22
+msgid "Keyword"
+msgstr "キーワード"
+
+#: resources/views/product/edit.twig:67 resources/views/settings.twig:23
+#: resources/views/product/edit.twig:36 resources/views/product/edit.twig:49
+#: resources/views/user_categories/search.twig:28
+#: resources/views/users/save.twig:21 resources/views/users/search.twig:29
+msgid "Name"
+msgstr "タイトル"
+
+#: resources/views/product/edit.twig:60
+msgid "No Amazon Product found"
+msgstr "Amazonの商品は見つかりませんでした。"
+
+#: resources/views/user_categories/search.twig:40
+#: resources/views/users/search.twig:44
+msgid "No record found"
+msgstr "データは見つかりませんでした。"
+
+#: resources/views/item_list.twig:91 resources/views/product/waiting.twig:79
+msgid "No records found"
+msgstr "データは見つかりませんでした。"
+
+#: resources/views/product/edit.twig:28
+msgid "No related images found"
+msgstr "画像が見つかりませんでした。"
+
+#: resources/views/import/keyword.twig:23
+msgid "Number of Results"
+msgstr "検索結果"
+
+#: resources/views/import/search-link.twig:25
+msgid "Number of Search Results 0-30 "
+msgstr "検索結果 0-30 "
+
+#: resources/views/login.twig:25 resources/views/settings.twig:25
+#: resources/views/users/save.twig:38
+msgid "Password"
+msgstr "パスコード"
+
+#: resources/views/settings.twig:26 
+#: resources/views/users/save.twig:39
+msgid "Password Confirmation"
+msgstr "パスコードの確認"
+
+#: resources/views/login.twig:18
+msgid "Please check your information!"
+msgstr "入力情報をご確認してください。"
+
+#: resources/views/item_list.twig:78 resources/views/product/edit.twig:69
+#: resources/views/product/waiting.twig:66
+msgid "Price"
+msgstr "価格"
+
+#: resources/views/product/edit.twig:4
+msgid "Product"
+msgstr "商品"
+
+#: resources/views/product/edit.twig:11
+msgid "Product Details"
+msgstr "商品詳細"
+
+#: resources/views/import/product-link.twig:22
+msgid "Product Link"
+msgstr "商品リンク"
+
+#: resources/views/dashboard.twig:10 resources/views/product/waiting.twig:10
+msgid "Products"
+msgstr "商品"
+
+#: resources/views/layouts/admin.twig:96
+msgid "Products Waiting List"
+msgstr "エクスポート待ち商品一覧"
+
+#: resources/views/item_list.twig:39 resources/views/product/waiting.twig:29
+msgid "Profit"
+msgstr "利益"
+
+#: resources/views/product/edit.twig:76
+msgid "Publish"
+msgstr "公開"
+
+#: resources/views/users/save.twig:23 resources/views/users/search.twig:28
+msgid "Role"
+msgstr "ロール"
+
+#: resources/views/import/search-link.twig:30
+msgid "Search"
+msgstr "検索"
+
+#: resources/views/import/search-link.twig:22
+msgid "Search Link"
+msgstr "検索リンク"
+
+#: resources/views/item_list.twig:56 resources/views/product/waiting.twig:44
+msgid "Seller"
+msgstr "セラー"
+
+#: resources/views/settings.twig:18
+msgid "Seller Settings"
+msgstr "セラーの設定"
+
+#: resources/views/layouts/admin.twig:27 resources/views/settings.twig:4
+#: resources/views/settings.twig:11
+msgid "Settings"
+msgstr "設定"
+
+#: resources/views/item_list.twig:82 resources/views/product/waiting.twig:70
+msgid "Shipping"
+msgstr "送料"
+
+#: resources/views/login.twig:3
+msgid "Sign In"
+msgstr "ログイン"
+
+#: resources/views/login.twig:31
+msgid "Sign in"
+msgstr "ログイン"
+
+#: resources/views/login.twig:14
+msgid "Sign in to your account"
+msgstr "アカウントにログインしてください。"
+
+#: resources/views/layouts/admin.twig:28
+msgid "Sign out"
+msgstr "ログアウト"
+
+#: resources/views/item_list.twig:17
+msgid "Sold in 3 days"
+msgstr "Sold in 3 days"
+
+#: resources/views/item_list.twig:21
+msgid "Sold in 7 days"
+msgstr "Sold in 7 days"
+
+#: resources/views/user_categories/search.twig:47
+#: resources/views/users/search.twig:51
+msgid "Total <strong>:total</strong> entries"
+msgstr "Total <strong>:total</strong> entries"
+
+#: resources/views/item_list.twig:74 resources/views/product/waiting.twig:62
+msgid "Total Sold"
+msgstr "Total Sold"
+
+#: resources/views/user_categories/save.twig:56
+#: resources/views/users/save.twig:44
+msgid "Update"
+msgstr "更新"
+
+#: resources/views/settings.twig:30
+msgid "Update Settings"
+msgstr "更新設定"
+
+#: resources/views/item_list.twig:66 resources/views/product/waiting.twig:54
+msgid "Updated At"
+msgstr "更新日"
+
+#: resources/views/layouts/admin.twig:80 resources/views/layouts/admin.twig:83
+#: resources/views/users/search.twig:5 resources/views/users/search.twig:14
+msgid "Users"
+msgstr "ユーザー一覧"
+
+#: resources/views/product/edit.twig:19
+msgid "Visit Amazon"
+msgstr "アマゾンリンク"
+
+#: resources/views/product/edit.twig:21
+msgid "Visit Yahoo"
+msgstr "ヤフーリンク"
+
+#: resources/views/settings.twig:19
+msgid "Yahoo App ID"
+msgstr "Yahoo App ID"
+
+#: resources/views/layouts/admin.twig:62
+msgid "Yahoo! Search and Import"
+msgstr "ヤフー検索と情報取集"
+
+#: resources/views/pagination.twig:6
+msgid "prev"
+msgstr "prev"
+
+#: app/Http/Controllers/LoginController.php:21
+msgid "Wrong email or password!"
+msgstr "メールアドレス又はパスワードが間違っております。"
+
+#: app/Http/Controllers/SettingsController.php:29
+msgid "Please fill the name field."
+msgstr "名前フィールドを記入してください。"
+
+#: app/Http/Controllers/SettingsController.php:30
+msgid "Email field is required."
+msgstr "メールアドレスを入力してください。"
+
+#: app/Http/Controllers/SettingsController.php:31
+#: app/Http/Controllers/UsersController.php:49
+msgid "Email is not valid."
+msgstr "正しいメールアドレスを入力してください。"
+
+#: app/Http/Controllers/SettingsController.php:32
+msgid "Email is already used."
+msgstr "メールアドレスは既に登録済みです。"
+
+#: app/Http/Controllers/SettingsController.php:33
+#: app/Http/Controllers/SettingsController.php:34
+msgid "Password is too short. It can be minimum 6 characters."
+msgstr "少なくても６文字でパスワードを設定してください。"
+
+#: app/Http/Controllers/SettingsController.php:35
+msgid "Please make sure that Password and Password Confirmation fields are equal."
+msgstr "パスワードとパスワード確認フィールドが一致しているかをご確認ください。"
+
+#: app/Http/Controllers/SettingsController.php:50
+msgid "Settings has been updated!"
+msgstr "設定が更新されました。"
+
+#: app/Http/Controllers/UserCategoriesController.php:42
+msgid "Selected category is not exists."
+msgstr "選択されたカテゴリーは存在しておりません。"
+
+#: app/Http/Controllers/UserCategoriesController.php:53
+msgid "Category has been updated!"
+msgstr "カテゴリーが更新されました。"
+
+#: app/Http/Controllers/UserCategoriesController.php:55
+msgid "Category has been added!"
+msgstr "カテゴリーが追加されました。"
+
+#: app/Http/Controllers/UserCategoriesController.php:69
+msgid "Category has been deleted!"
+msgstr "カテゴリーが削除されました。"
+
+#: app/Http/Controllers/UsersController.php:47
+msgid "Name is required."
+msgstr "名前を記入してください。"
+
+#: app/Http/Controllers/UsersController.php:48
+msgid "Email is required."
+msgstr "メールアドレスを記入してください。"
+
+#: app/Http/Controllers/UsersController.php:50
+msgid "Email is already in use."
+msgstr "メールアドレスは既に登録済みです。"
+
+#: app/Http/Controllers/UsersController.php:51
+msgid "Please confirm your password."
+msgstr "パスワードをご確認ください。"
+
+#: app/Http/Controllers/UsersController.php:52
+msgid "Password can be minimum 6 characters long."
+msgstr "パスワードは少なくても６文字になるように設定してください。"
+
+#: app/Http/Controllers/UsersController.php:68
+msgid "User has been updated!"
+msgstr "ユーザーが更新されました。"
+
+#: app/Http/Controllers/UsersController.php:70
+msgid "User has been created!"
+msgstr "ユーザーが作成されました。"
+
+#: app/Http/Controllers/UsersController.php:84
+msgid "User has been deleted!"
+msgstr "ユーザーが削除されました。"
+
+#: app/Http/Controllers/YahooProductsController.php:41
+#: app/Http/Controllers/YahooProductsController.php:42
+msgid "Enter a valid Yahoo! Shopping product link."
+msgstr "正しいヤフー商品リンクを入力してください。"
+
+#: app/Http/Controllers/YahooProductsController.php:130
+msgid "Product successfully saved!"
+msgstr "商品を保存しました。"
+
+#: app/Http/Controllers/YahooProductsController.php:133
+msgid "Product failed to save!"
+msgstr "商品の保存に失敗しました。"
+
+#: app/Http/Controllers/YahooProductsController.php:163
+#: app/Http/Controllers/YahooProductsController.php:164
+msgid "Enter a valid Yahoo! Shopping search link."
+msgstr "正しいヤフー商品検索リンクを入力してください。"
+
+#: app/Http/Controllers/YahooProductsController.php:165
+#: app/Http/Controllers/YahooProductsController.php:166
+msgid "Enter a valid search results count."
+msgstr "取集される商品数を正しく入力してください。"
+
+#: app/Http/Controllers/YahooProductsController.php:189
+msgid "Products added to the system."
+msgstr "商品がシステムに追加されました。"
+
+#: app/Http/Controllers/YahooProductsController.php:310
+msgid "Enter a valid keyword."
+msgstr "正しいキーワードを入力してください。"
+
+#: app/Http/Controllers/YahooProductsController.php:311
+msgid "Enter a valid number of expected results."
+msgstr "正しい件数を入力してください。"
+
+#: app/Http/Controllers/YahooProductsController.php:312
+msgid "Enter a valid number only."
+msgstr "件数を正しく入力してください。"
+
+#: resources/views/item_list.twig:43
+msgid "Amazon Product Url"
+msgstr "Amazon商品URL"
+
+#: resources/views/item_list.twig:49
+msgid "Yahoo Product Url"
+msgstr "Yahoo商品URL"
+
+#: resources/views/item_list.twig:67
+#: resources/views/export_product/save.twig:98
+msgid "Seller Price"
+msgstr "販売金額"
+
+#: resources/views/item_list.twig:75
+msgid "Yahoo Price"
+msgstr "Yahoo仕入れ金額"
+
+#: resources/views/item_list.twig:79
+msgid "Amazon Price"
+msgstr "Amazon仕入れ金額"
+
+#: resources/views/item_list.twig:83
+msgid "Amazon Shipping"
+msgstr "Amazon送料"
+
+#: resources/views/export_product/save.twig:4
+#: resources/views/export_product/save.twig:39
+msgid "Export Product"
+msgstr "Export Product"
+
+#: resources/views/item_list.twig:35
+#: resources/views/export_product/save.twig:63
+msgid "Yahoo Product"
+msgstr "Yahoo商品"
+
+#: resources/views/item_list.twig:35
+#: resources/views/export_product/save.twig:73
+msgid "Amazon Product"
+msgstr "Amazon商品"
+
+#: resources/views/product/edit.twig:40
+#: resources/views/product/edit.twig:70
+msgid "Description"
+msgstr "説明"
+
+#: resources/views/product/edit.twig:53
+msgid "Quantity"
+msgstr "個数"
+
+#: resources/views/export_product/save.twig:90
+#: resources/views/my_products/search.twig:186
+msgid "Genre"
+msgstr "カテゴリー"
+
+#: resources/views/export_product/search.twig:186
+msgid "Export Status"
+msgstr "Export Status"
+
+#: resources/views/minimum_profit/search.twig:28
+msgid "Price Range"
+msgstr "価格帯"
+
+#: resources/views/minimum_profit/save.twig:5 
+#: resources/views/minimum_profit/save.twig:14
+msgid "Create Profit Setting"
+msgstr "利益設定を作成する"
+
+#: resources/views/minimum_profit/save.twig:21 
+msgid "Minimum Price"
+msgstr "最低価格"
+
+#: resources/views/minimum_profit/save.twig:22 
+msgid "Maximum Price"
+msgstr "最高価格"
+
+#: app/Http/Controllers/MinimumProfitController.php:82 
+msgid "Minimum profit has been updated!"
+msgstr "最低利益が更新されました！"
+
+#: app/Http/Controllers/MinimumProfitController.php:84 
+msgid "Minimum profit has been created!"
+msgstr "最小の利益が生まれました！"
+
+#: app/Http/Controllers/MinimumProfitController.php:96 
+msgid "Minimum profit has been deleted!"
+msgstr "最小の利益が生まれました！"
+
+#: resources/views/minimum_profit/save.twig:5
+#: resources/views/minimum_profit/save.twig:14
+msgid "Edit Profit Setting"
+msgstr "利益設定の編集"
+
+#: app/Http/Controllers/MinimumProfitController.php:57
+msgid "Minimum price is already added."
+msgstr "最低価格はすでに追加されています。"
+
+#: app/Http/Controllers/MinimumProfitController.php:65
+msgid "Maximum price is already added."
+msgstr "最高価格はすでに追加されています。"
+
+#: app/Http/Controllers/MinimumProfitController.php:74
+msgid "Price range is already added."
+msgstr "価格帯はすでに追加されています。"
+
+#: app/Http/Controllers/MinimumProfitController.php:42
+msgid "Minimum price is required."
+msgstr "最低価格が必要です。"
+
+#: app/Http/Controllers/MinimumProfitController.php:43
+msgid "Maximum price is required."
+msgstr "最高価格が必要です。"
+
+#: app/Http/Controllers/MinimumProfitController.php:44
+msgid "Profit is required."
+msgstr "利益が必要です。"
+
+#: resources/views/export_product/search.twig:3
+#: resources/views/minimum_profit/save.twig:30
+#: resources/views/users/save.twig:47
+#: resources/views/user_categories/save.twig:59
+msgid "Are you sure?"
+msgstr "本気ですか？"
+
+#: resources/views/my_products/search.twig:169
+msgid "Image"
+msgstr "画像"
+
+#: resources/views/my_products/auto_stock_setting.twig:11
+msgid "Auto Stock Setting"
+msgstr "自動在庫確認設定"
+
+#: app/Http/Controllers/MyProduct/AutoStockSettingController.php:52
+msgid "Setting has been saved."
+msgstr "設定が保存されました。"
+
+#: app/Http/Controllers/MyProduct/AutoStockSettingController.php:52
+msgid "We could not fetch Amazon product information. Please try again or contact site administrator."
+msgstr "Amazonの商品情報を取得できませんでした。もう一度やり直すか、サイト管理者に連絡してください。"
+
+
