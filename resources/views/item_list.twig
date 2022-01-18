@@ -1,0 +1,97 @@
+<div id="item-list" class="table-responsive">
+    <table class="table card-table table-vcenter datatable table-hover">
+        <tbody>
+        {% for item in items %}
+            <tr>
+                <td style="vertical-align: top; width: 180px;">
+                    <div class="links">
+                        <div class="image" style="width: 100px; margin: 20px auto;">
+                            <img src="https://item-shopping.c.yimg.jp/i/g/{{ item.image }}" style="width: 90%" />
+                        </div>
+                        <div class="btn-group">
+                            <a href="{{ item.url }}" target="_blank" class="btn btn-icon btn-info"><svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v12m-8 -8a8 8 0 0 0 16 0m1 0h-2m-14 0h-2" /><circle cx="12" cy="6" r="3" /></svg></a>
+                            <a href="{{ route('exported_products.save', {product_id: item.id}) }}" target="_blank" class="btn btn-icon btn-info"><svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="9" /><line x1="9" y1="12" x2="15" y2="12" /><line x1="12" y1="9" x2="12" y2="15" /></svg></a>
+                        </div>
+                    </div>
+                </td>
+                <td style="vertical-align: top;">
+                    <div class="item">
+                        <div class="details" style="width: 90%">
+                            <div class="title">
+                                {{ item.name }}
+                            </div>
+                            <table style="margin-bottom: 5px; font-size: 12px;">
+                                <tr>
+                                    <th style="padding-left: 0; font-weight: 500">{{ trans('ID') }}</th>
+                                    <th>:</th>
+                                    <td>{{ item.id }}</td>
+                                </tr>
+                                {% if item.jan_code %}
+                                    <tr>
+                                        <th style="padding-left: 0; font-weight: 500">{{ trans('JAN Code') }}</th>
+                                        <th>:</th>
+                                        <td>{{ item.jan_code }}</td>
+                                    </tr>
+                                {% endif %}
+                                <tr>
+                                    <th style="padding-left: 0; font-weight: 500">{{ trans('Seller') }}</th>
+                                    <th>:</th>
+                                    <td><a href="{{ item.seller.url }}" target="_blank">{{ item.seller.name }} <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v12m-8 -8a8 8 0 0 0 16 0m1 0h-2m-14 0h-2" /><circle cx="12" cy="6" r="3" /></svg></a></td>
+                                </tr>
+                                {% if item.amazon_product %}
+                                    <tr>
+                                        <th style="padding-left: 0; font-weight: 500">{{ trans('Amazon Product Url') }}</th>
+                                        <th>:</th>
+                                        <td><a href="{{ item.amazon_product.url }}" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" class="icon" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v12m-8 -8a8 8 0 0 0 16 0m1 0h-2m-14 0h-2" /><circle cx="12" cy="6" r="3" /></svg></a></td>
+                                    </tr>
+                                {% endif %}
+                                <tr>
+                                    <th style="padding-left: 0; font-weight: 500">{{ trans('Yahoo Product Url') }}</th>
+                                    <th>:</th>
+                                    <td><a href="{{ item.url }}" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" class="icon" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v12m-8 -8a8 8 0 0 0 16 0m1 0h-2m-14 0h-2" /><circle cx="12" cy="6" r="3" /></svg></a></td>
+                                </tr>
+                                <tr>
+                                    <th style="padding-left: 0; font-weight: 500">{{ trans('Created At') }}</th>
+                                    <th>:</th>
+                                    <td>{{ item.created_at|date('d M Y H:i:s') }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="padding-left: 0; font-weight: 500">{{ trans('Updated At') }}</th>
+                                    <th>:</th>
+                                    <td>{{ item.updated_at|date('d M Y H:i:s') }}</td>
+                                </tr>
+                            </table>
+                            <div class="features">
+                                <div class="feature" style="background: green; color: #fff;">
+                                    <div class="value">¥{{ item.calculateSellerPrice(auth_user())["calculatedPrice"] }}</div>
+                                    <div class="title" style="color: #fff;">{{ trans('Seller Price') }}</div>
+                                </div>
+                                <div class="feature" style="background: green; color: #fff;">
+                                    <div class="value">¥{{ item.calculateSellerProfit(auth_user()) }}</div>
+                                    <div class="title" style="color: #fff;">{{ trans('Profit') }}</div>
+                                </div>
+                                <div class="feature">
+                                    <div class="value">¥{{ item.price }}</div>
+                                    <div class="title">{{ trans('Yahoo Price') }}</div>
+                                </div>
+                                <div class="feature">
+                                    <div class="value">¥{{ item.amazon_product.price + item.amazon_product.shipping_fee }}</div>
+                                    <div class="title">{{ trans('Amazon Price') }}</div>
+                                </div>
+                                {# <div class="feature">
+                                    <div class="value">¥{{ item.amazon_product.shipping_fee }}</div>
+                                    <div class="title">{{ trans('Amazon Shipping') }}</div>
+                                </div> #}
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="16">{{ trans('No records found') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

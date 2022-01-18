@@ -1,0 +1,82 @@
+{% extends('layouts.admin') %}
+{% import('form_macro') as form_macro %}
+
+{% block title %}{{ trans('Product') }}{% endblock %}
+
+{% block auth_content %}
+<div class="container-fluid">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">{{ trans('Product Details') }}</h3>
+            </div>
+            <form action="{{ url('publish_product', product.id) }}" method="post">
+                {{ csrf_field() }}
+                <div class="card-body">
+                    {{ form_macro.messages() }}
+                    <div class="d-flex mb-2">
+                        {% if amazon_product %}
+                            <a target="_blank" href="{{ amazon_product.url }}" style="margin-right: 2px;" class="btn btn-primary">{{ trans('Visit Amazon') }}</a>
+                        {% endif %}
+                        <a target="_blank" href="{{ product.url }}" style="margin-right: 2px;" class="btn btn-primary">{{ trans('Visit Yahoo') }}</a>
+                    </div>
+                    <fieldset class="form-fieldset">
+                        <img src="https://item-shopping.c.yimg.jp/i/g/{{ product.image }}" width="120" style="margin-right: 5px;" />
+                        {% for imageUrl in images %}
+                            <img src="{{ imageUrl }}"  width="120" style="margin-right: 5px;" />
+                        {% else %}
+                            <span>{{ trans('No related images found') }}</span>
+                        {% endfor %}
+                    </fieldset>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <fieldset class="form-fieldset">
+                                <h3> {{ trans('Yahoo Product') }}</h3>
+                                <label>{{ trans('Name') }}</label>
+                                <input class="form-control" disabled value="{{product.name}}">
+                                <label>Price</label>
+                                <input class="form-control" disabled value="{{product.price}}">
+                                <label>{{ trans('Description') }}</label>
+                                <textarea class="form-control" disabled rows="10">{{ product.description }}</textarea>
+                            </fieldset>
+                        </div>
+
+                        <div class="col-md-6">
+                            <fieldset class="form-fieldset">
+                            {% if amazon_product %}
+                                <h3>Amazon Product</h3>
+                                <label>{{ trans('Name') }}</label>
+                                <input class="form-control" disabled value="{{amazon_product.name}}">
+                                <label>Price</label>
+                                <input class="form-control" disabled value="{{amazon_product.price + amazon_product.shipping_fee}}">
+                                <label>{{ trans('Quantity') }}</label>
+                                <input class="form-control" disabled value="{{amazon_product.quantity}}">
+                                <label>ASIN</label>
+                                <input class="form-control" disabled value="{{amazon_product.asin}}">
+                                {# <label>Shipping</label>
+                                <input class="form-control" disabled value="{{amazon_product.shipping_fee}}"> #}
+                            {% else %}
+                                <span>{{ trans('No Amazon Product found') }}</span>
+                            {% endif %}
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <fieldset class="form-fieldset">
+                        {{ form_macro.textField({label: trans('Name'), field: 'name', value: old('name')}) }}
+                        {{ form_macro.textField({label: trans('Category'), field: 'category', value: old('category')}) }}
+                        {{ form_macro.textField({label: trans('Price'), field: 'price', value: old('price')}) }}
+                        <label>{{ trans('Description') }}</label>
+                        <textarea class="form-control" name="description" rows="10"></textarea>
+                    </fieldset>
+
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">{{ trans('Publish') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
