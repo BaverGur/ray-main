@@ -1,0 +1,39 @@
+{% extends('layouts.admin') %}
+{% import('form_macro') as form_macro %}
+
+{% block title %}
+    {% if app.request.get('id') > 0 %}{{ trans('Edit Profit Setting') }}{% else %}{{ trans('Create Profit Setting') }}{% endif %}
+{% endblock %}
+
+{% block auth_content %}
+    <div class="container-fluid">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        {% if app.request.get('id') > 0 %}{{ trans('Edit Profit Setting') }}{% else %}{{ trans('Create Profit Setting') }}{% endif %}
+                    </h3>
+                </div>
+                <form action="" method="post">
+                    {{ csrf_field() }}
+                    <div class="card-body">
+                        {{ form_macro.messages() }}
+                        {{ form_macro.textField({label: trans('Minimum Price'), field: 'min_price', value: old('min_price', minimum_profit.min_price)}) }}
+                        {{ form_macro.textField({label: trans('Maximum Price'), field: 'max_price', value: old('max_price', minimum_profit.max_price)}) }}
+                        {{ form_macro.textField({label: trans('Profit'), field: 'profit', value: old('profit', minimum_profit.profit)}) }}
+                    </div>
+                    <div class="card-footer d-flex">
+                        <button type="submit" class="btn btn-primary">
+                            {% if app.request.get('id') > 0 %}{{ trans('Update') }}{% else %}{{ trans('Create') }}{% endif %}
+                        </button>
+                        {% if minimum_profit.id > 0 %}
+                            <a href="{{ route('minimum_profits.delete', {id: minimum_profit.id}) }}" class="btn btn-danger" style="margin-left: auto" onclick="return confirm('{{ trans('Are you sure?') }}');">
+                                {{ trans('Delete') }}
+                            </a>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

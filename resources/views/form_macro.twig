@@ -1,0 +1,84 @@
+{% macro textField(options) %}
+    <div class="mb-3">
+        <label class="form-label">{{ options.label }}</label>
+        <input type="text" class="form-control {% if errors.first(options.field) %}is-invalid{% endif %}"
+               autocomplete="off"
+               {% if options.maxLength|default(null) %}maxlength="{{ options.maxLength }}"{% endif %}
+               {% if options.id|default(null) %}id="{{ options.id }}"{% endif %}
+               {% if options.disabled|default(false) %}disabled="disabled"{% endif %}
+               {% if options.mask|default(null) %}data-mask="{{ options.mask }}" data-mask-visible="true"{% endif %}
+               placeholder="{{ options.label }}" name="{{ options.field }}" value="{{ options.value }}"
+               {% if options.readonly|default(null) %}readonly{% endif %}
+                />
+        {{ _self.showInputError(options.field) }}
+    </div>
+{% endmacro %}
+
+{% macro emailField(options) %}
+    <div class="mb-3">
+        <label class="form-label">{{ options.label }}</label>
+        <input type="email" class="form-control {% if errors.first(options.field) %}is-invalid{% endif %}" autocomplete="off" placeholder="{{ options.label }}" name="{{ options.field }}" value="{{ options.value }}" />
+        {{ _self.showInputError(options.field) }}
+    </div>
+{% endmacro %}
+
+{% macro passwordField(options) %}
+    <div class="mb-3">
+        <label class="form-label">{{ options.label }}</label>
+        <input type="password" class="form-control {% if errors.first(options.field) %}is-invalid{% endif %}" placeholder="{{ options.label }}" name="{{ options.field }}" />
+        {{ _self.showInputError(options.field) }}
+    </div>
+{% endmacro %}
+
+{% macro textareaField(options) %}
+    <div class="mb-3">
+        <label class="form-label">{{ options.label }}</label>
+        <textarea class="form-control
+            {% if errors.first(options.field) %}is-invalid{% endif %}"
+            {% if options.disabled|default(false) %}disabled="disabled"{% endif %}
+            placeholder="{{ options.label }}" name="{{ options.field }}" rows="{{ options.rows|default(5) }}"
+             {% if options.readonly|default(null) %}readonly{% endif %}
+            >{{ str_replace("<br>", "\r\n", options.value)  }}</textarea>
+        {{ _self.showInputError(options.field) }}
+    </div>
+{% endmacro %}
+
+{% macro select(options) %}
+    <div class="mb-3">
+        <label class="form-label">{{ options.label }}</label>
+        <select class="form-select {{ _self.showInputInvalid(options.field) }}" name="{{ options.field }}">
+            {% for option in options.options %}
+                <option value="{{ option.value }}" {% if options.value == option.value %}selected="selected"{% endif %}>{{ option.name }}</option>
+            {% endfor %}
+        </select>
+        {{ _self.showInputError(options.field) }}
+    </div>
+{% endmacro %}
+
+{% macro showInputInvalid(fieldName) %}
+    {% if errors.first(fieldName) %}is-invalid{% endif %}
+{% endmacro %}
+
+{% macro showInputError(fieldName) %}
+    {% if errors.first(fieldName) %}
+        <div class="invalid-feedback">{{ errors.first(fieldName) }}</div>
+    {% endif %}
+{% endmacro %}
+
+{% macro messages() %}
+    {% if errors.any %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for error in errors.all() %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    {% if session_has('error') %}
+        <div class="alert alert-danger">{{ session_get('error') }}</div>
+    {% endif %}
+    {% if session_has('success') %}
+        <div class="alert alert-success">{{ session_get('success') }}</div>
+    {% endif %}
+{% endmacro %}
