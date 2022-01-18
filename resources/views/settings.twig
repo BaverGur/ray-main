@@ -1,0 +1,91 @@
+{% extends('layouts.admin') %}
+{% import('form_macro') as form_macro %}
+
+{% block title %}{{ trans('Settings') }}{% endblock %}
+
+{% block auth_content %}
+<div class="container-fluid">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">{{ trans('Settings') }}</h3>
+            </div>
+            <form action="" method="post">
+                {{ csrf_field() }}
+                <div class="card-body">
+                    {{ form_macro.messages() }}
+                    <fieldset class="form-fieldset">
+                        <legend>{{ trans('Seller Settings') }}</legend>
+                        {{ form_macro.textField({label: trans('Rakuten Shop Url'), field: 'shop_url', value: old('shop_url', user.shop_url)}) }}
+                        {{ form_macro.textField({label: trans('Rakuten Fee (%)'), field: 'rakuten_fee', value: old('rakuten_fee', user.rakuten_fee)}) }}
+                        {{ form_macro.textField({label: trans('Yahoo App ID'), field: 'yahoo_app_id', value: old('yahoo_app_id', user.yahoo_app_id)}) }}
+                        {{ form_macro.textField({label: trans('Rakuten RMS Secret Key'), field: 'rakuten_rms_secret', value: old('rakuten_rms_secret', user.rakuten_rms_secret)}) }}
+                        {{ form_macro.textField({label: trans('Rakuten RMS Licence Key'), field: 'rakuten_rms_licence', value: old('rakuten_rms_licence', user.rakuten_rms_licence)}) }}
+                    </fieldset>
+                    <fieldset class="form-fieldset">
+                        
+                          <div class="card">
+                <div class="card-header">
+                    <legend>{{ trans('Shipping Fee Settings') }}</legend>
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item ms-auto">
+                            <a class="nav-link" href="{{ route('shipping-settings.save') }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                                &nbsp;{{ trans('Add') }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="table-responsive">
+                    <table class="table card-table table-vcenter text-nowrap datatable table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>{{ trans('Shipping Method') }}</th>
+                            <th>{{ trans('Shipping Fee') }}</th>
+                            <th>{{ trans('Height (cm)') }}</th>
+                            <th>{{ trans('Width (cm)') }}</th>
+                             <th>{{ trans('Depth (cm)') }}</th>
+                            <th>{{ trans('Kg') }}</th>
+                            <th>{{ trans('Total x+y+z (cm)') }}</th>
+                            <th style="width: 50px;"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for shipping_fee in shipping_fees %}
+                            <tr>
+                                <td>{{ shipping_fee.name }}</td>
+                                <td>{{ shipping_fee.fee }}</td>
+                                <td>{{ shipping_fee.height }}</td>
+                                <td>{{ shipping_fee.width }}</td>
+                                <td>{{ shipping_fee.depth }}</td>
+                                  <td>{{ shipping_fee.kg }}</td>
+                                <td>{{ shipping_fee.totalDWH }}</td>
+                                <td style="text-align: right;"><a href="{{ route('shipping-settings.save', {id: shipping_fee.id}) }}">{{ trans('Edit') }}</a></td>
+                            </tr>
+                        {% else %}
+                            
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+              
+            </div>
+                    
+                    
+                    </fieldset>
+                    <fieldset class="form-fieldset">
+                        <legend>{{ trans('General') }}</legend>
+                        {{ form_macro.textField({label: trans('Name'), field: 'name', value: old('name', user.name)}) }}
+                        {{ form_macro.emailField({label: trans('Email'), field: 'email', value: old('email', user.email)}) }}
+                        {{ form_macro.passwordField({label: trans('Password'), field: 'password'}) }}
+                        {{ form_macro.passwordField({label: trans('Password Confirmation'), field: 'password_confirmation'}) }}
+                    </fieldset>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">{{ trans('Update Settings') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends('layouts.admin') %}
+{% import('form_macro') as form_macro %}
+
+{% block title %}
+    {% if app.request.get('id') > 0 %}{{ trans('Edit Shipping Method Setting') }}{% else %}{{ trans('Create Shipping Method Setting') }}{% endif %}
+{% endblock %}
+
+{% block auth_content %}
+    <div class="container-fluid">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        {% if app.request.get('id') > 0 %}{{ trans('Edit Shipping Method Setting') }}{% else %}{{ trans('Create Shipping Method Setting') }}{% endif %}
+                    </h3>
+                </div>
+                <form action="" method="post">
+                    {{ csrf_field() }}
+                    <div class="card-body">
+                        {{ form_macro.messages() }}
+                        {{ form_macro.textField({label: trans('Shipping Method'), field: 'name', value: old('name', shipping_fee.name)}) }}
+                        {{ form_macro.textField({label: trans('Fee'), field: 'fee', value: old('fee', shipping_fee.fee)}) }}
+                        {{ form_macro.textField({label: trans('Depth (cm)'), field: 'depth', value: old('depth', shipping_fee.depth)}) }}
+                        {{ form_macro.textField({label: trans('Width (cm)'), field: 'width', value: old('width', shipping_fee.width)}) }}
+                        {{ form_macro.textField({label: trans('Height (cm)'), field: 'height', value: old('height', shipping_fee.height)}) }}
+                        {{ form_macro.textField({label: trans('Kg'), field: 'kg', value: old('kg', shipping_fee.kg)}) }}
+                        {{ form_macro.textField({label: trans('Total x+y+z (cm)'), field: 'totalDWH', value: old('totalDWH', shipping_fee.totalDWH)}) }}
+                       
+                        
+                    </div>
+                    <div class="card-footer d-flex">
+                        <button type="submit" class="btn btn-primary">
+                            {% if app.request.get('id') > 0 %}{{ trans('Update') }}{% else %}{{ trans('Create') }}{% endif %}
+                        </button>
+                        {% if shipping_fee.id > 0 %}
+                            <a href="{{ route('shipping-settings.delete', {id: shipping_fee.id}) }}" class="btn btn-danger" style="margin-left: auto" onclick="return confirm('{{ trans('Are you sure?') }}');">
+                                {{ trans('Delete') }}
+                            </a>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
