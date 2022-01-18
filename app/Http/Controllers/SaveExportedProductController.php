@@ -58,7 +58,6 @@ class SaveExportedProductController extends Controller
             }
             
             
-            
         } else {
             $this->exportProduct = ExportProduct::query()
                 ->where('id', $request->get('id'))

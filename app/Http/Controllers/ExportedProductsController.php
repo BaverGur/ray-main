@@ -10,7 +10,7 @@ class ExportedProductsController extends Controller
 {
     public function index(Request $request)
     {
-        $itemType = $request->get('item_type', 'draft');
+       $itemType = $request->get('item_type', 'draft');
         $products = ExportProduct::query()->where('user_id', Auth::id())->orderBy('name');
         if ($itemType === 'draft') {
             $products = $products

@@ -110,6 +110,7 @@ class ItemImporter
         ) {
             $imageUrls = array_column($hit->RelatedImages->Image, 'Medium');
             $product->related_images = implode(', ', $imageUrls);
+            
         }
         $product->save();
         return $product;
