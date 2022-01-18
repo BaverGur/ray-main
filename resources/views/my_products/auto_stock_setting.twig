@@ -1,0 +1,57 @@
+{% extends('layouts.admin') %}
+{% import('form_macro') as form_macro %}
+
+{% block title %}{{ trans('Auto Stock Setting') }}{% endblock %}
+
+{% block auth_content %}
+    <div class="container-fluid">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{ trans('Auto Stock Setting') }}</h3>
+                </div>
+                <form action="" method="post">
+                    {{ csrf_field() }}
+                    <div class="card-body">
+                        {{ form_macro.messages() }}
+                        <div class="mb-3">
+                            <label class="form-label">{{ trans('Product') }}</label>
+                            <div class="d-flex align-items-center">
+                                <img src="https://item-shopping.c.yimg.jp/i/g/{{ exported_product.product.image }}" width="50" />
+                                <strong style="margin-left: 10px">{{ exported_product.name }}</strong>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">{{ trans('Status') }}</label>
+                            <select name="is_auto_stock_enabled" class="form-select {{ form_macro.showInputInvalid('is_auto_stock_enabled') }}">
+                                <option value="1" {% if old('is_auto_stock_enabled', exported_product.is_auto_stock_enabled) == 1 %}selected{% endif %}>{{ trans('Enabled') }}</option>
+                                <option value="0" {% if old('is_auto_stock_enabled', exported_product.is_auto_stock_enabled) == 0 %}selected{% endif %}>{{ trans('Disabled') }}</option>
+                            </select>
+                            {{ form_macro.showInputError('is_auto_stock_enabled') }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">{{ trans('Service') }}</label>
+                            <select name="stock_service" class="form-select {{ form_macro.showInputInvalid('stock_service') }}">
+                                <option value="">{{ trans('Please select a service') }}</option>
+                                <option value="amazon" {% if old('stock_service', exported_product.stock_service) == 'amazon' %}selected{% endif %}>Amazon</option>
+                            </select>
+                            {{ form_macro.showInputError('stock_service') }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">{{ trans('Product Code') }}</label>
+                            <input type="text" class="form-control {{ form_macro.showInputInvalid('stock_product_code') }}" placeholder="{{ trans('Product Code') }}" name="stock_product_code" value="{{ old('stock_product_code', exported_product.stock_product_code)  }}" />
+                            {{ form_macro.showInputError('stock_product_code') }}
+                            <div class="text-muted mt-3">
+                                <div><div style="width: 70px; display: inline-block">Amazon</div>: {{ trans('Please use ASIN number.') }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex">
+                        <a href="{{ route('my_products.search') }}" class="btn btn-info">{{ trans('Go Back') }}</a>
+                        <button type="submit" class="btn btn-primary" style="margin-left: auto;">{{ trans('Update Settings') }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

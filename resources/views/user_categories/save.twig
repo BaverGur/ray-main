@@ -1,0 +1,68 @@
+{% extends('layouts.admin') %}
+{% import('form_macro') as form_macro %}
+
+{% block title %}
+    {% if app.request.get('id') > 0 %}{{ trans('Edit Category') }}{% else %}{{ trans('Add Category') }}{% endif %}
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $('select[name=category_id]').select2({
+            ajax: {
+                delay: 250,
+                url: '{{ route('categories.ajax_search') }}',
+                dataType: 'json',
+                processResults: function (data) {
+                    return {
+                        results: data.map(function (item) {
+                            return {
+                                id: item.id,
+                                text: `${item.name}`
+                            }
+                        })
+                    };
+                }
+            }
+        });
+    </script>
+{% endblock %}
+
+{% block auth_content %}
+    <div class="container-fluid">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        {% if app.request.get('id') > 0 %}{{ trans('Edit Category') }}{% else %}{{ trans('Add Category') }}{% endif %}
+                    </h3>
+                </div>
+                <form action="" method="post">
+                    {{ csrf_field() }}
+                    <div class="card-body">
+                        {{ form_macro.messages() }}
+                        <div class="mb-3">
+                            <label class="form-label">{{ trans('Category') }}</label>
+                            <select name="category_id" class="form-select {{ form_macro.showInputInvalid('category_id') }}">
+                                {% if user_category.id > 0 %}
+                                    <option value="{{ old('category_id', user_category.category.id) }}" selected="selected">{{ user_category.category.full_name }}</option>
+                                {% endif %}
+                            </select>
+                            {{ form_macro.showInputError('category_id') }}
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex">
+                        <button type="submit" class="btn btn-primary">
+                            {% if app.request.get('id') > 0 %}{{ trans('Update') }}{% else %}{{ trans('Add') }}{% endif %}
+                        </button>
+                        {% if user_category.id > 0 %}
+                            <a href="{{ route('user_categories.delete', {id: user_category.id}) }}" class="btn btn-danger" style="margin-left: auto" onclick="return confirm('{{ trans('Are you sure?') }}');">
+                                {{ trans('Delete') }}
+                            </a>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

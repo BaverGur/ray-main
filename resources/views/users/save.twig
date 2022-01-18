@@ -1,0 +1,56 @@
+{% extends('layouts.admin') %}
+{% import('form_macro') as form_macro %}
+
+{% block title %}
+    {% if app.request.get('id') > 0 %}{{ trans('Edit User') }}{% else %}{{ trans('Create User') }}{% endif %}
+{% endblock %}
+
+{% block auth_content %}
+    <div class="container-fluid">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        {% if app.request.get('id') > 0 %}{{ trans('Edit User') }}{% else %}{{ trans('Create User') }}{% endif %}
+                    </h3>
+                </div>
+                <form action="" method="post">
+                    {{ csrf_field() }}
+                    <div class="card-body">
+                        {{ form_macro.messages() }}
+                        {{ form_macro.textField({label: trans('Name'), field: 'name', value: old('name', user.name)}) }}
+                        {{ form_macro.emailField({label: trans('Email'), field: 'email', value: old('email', user.email)}) }}
+                        {{ form_macro.select({label: trans('Role'), field: 'role', value: old('role', user.role), options: [
+                            {value: 'admin', name: 'Admin'},
+                            {value: 'user', name: 'User'}
+                        ]}) }}
+                        {% if user.id >0 %}
+                            <div class="mb-3">
+                                <div>
+                                    <label class="form-check">
+                                        <input class="form-check-input" type="checkbox" onchange="$('#password-fields').toggle();">
+                                        <span class="form-check-label">{{ trans('Change password')}} </span>
+                                    </label>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div id="password-fields" {% if user.id > 0 %}style="display: none;"{% endif %}>
+                            {{ form_macro.passwordField({label: trans('Password'), field: 'password'}) }}
+                            {{ form_macro.passwordField({label: trans('Password Confirmation'), field: 'password_confirmation'}) }}
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex">
+                        <button type="submit" class="btn btn-primary">
+                            {% if app.request.get('id') > 0 %}{{ trans('Update') }}{% else %}{{ trans('Create') }}{% endif %}
+                        </button>
+                        {% if user.id > 0 %}
+                            <a href="{{ route('users.delete', {id: user.id}) }}" class="btn btn-danger" style="margin-left: auto" onclick="return confirm('{{ trans('Are you sure?') }}');">
+                                {{ trans('Delete') }}
+                            </a>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

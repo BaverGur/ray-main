@@ -1,0 +1,259 @@
+{% extends('layouts.admin') %}
+{% import('form_macro') as form_macro %}
+
+{% block title %}
+    {{ trans('My Products') }}
+{% endblock %}
+
+{% block css %}
+    <style>
+        .features {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .features .feature {
+            border-radius: 4px;
+            margin: 5px;
+            padding: 5px;
+            box-shadow: rgb(0 0 0 / 16%) 0px 4px 12px 0px;
+            width: 130px;
+            font-size: 12px;
+            text-align: center;
+            background: #fff;
+        }
+
+        .features .feature .title {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .features .feature .value {
+            font-size: 13px;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .features .profit-feature-green {
+            background: #00bb00;
+        }
+
+        .features .profit-feature-red {
+            background: #e4405f;
+        }
+
+        .features .profit-feature-green,
+        .features .profit-feature-red {
+            color: #fff;
+        }
+
+        .features .profit-feature-green .title,
+        .features .profit-feature-red .title{
+            color: #fff;
+        }
+    </style>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var MINIMUM_PROFIT = parseInt({{ auth_user().minimum_profit ?? 0 }});
+
+        function showEditShippingFeeModal(itemId) {
+            $('#shipping-fee-modal input[name=shipping_fee]').val($(`#shipping-fee-${itemId}`).data('value'));
+            $('#shipping-fee-modal input[name=item_id]').val(itemId);
+            $('#shipping-fee-modal').modal('show');
+        }
+
+        function updateShippingFee(button) {
+            $(button).attr('disabled', 'disabled');
+            var beforeContent = $(button).html();
+            $(button).html(`
+                <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                {{ trans('Please wait...') }}
+            `);
+            var itemId = $('#shipping-fee-modal input[name=item_id]').val();
+            var newValue = $('#shipping-fee-modal input[name=shipping_fee]').val();
+            $.post('{{ route('my_products.update_shipping_fee') }}', {shipping_fee: newValue, id: itemId}, function (response) {
+                $(button).html(beforeContent);
+                $(button).removeAttr('disabled');
+                $(`#shipping-fee-${itemId}`).text('¥ ' + newValue);
+                $('#shipping-fee-modal').modal('hide');
+                $(`#profit-value-${itemId}`).text('¥ ' + response.profit);
+                $(`#price_for_${itemId}`).val(response.price);
+                updateProfitColor($(`#profit-value-${itemId}`), response.profit, response.minimum_profit);
+                $(`#shipping-fee-${itemId}`).data('value', newValue);
+            });
+        }
+
+        var PRICE_CHANGED_TIMEOUT_ID = null;
+        function priceChanged(itemId, value) {
+            if (PRICE_CHANGED_TIMEOUT_ID) {
+                clearTimeout(PRICE_CHANGED_TIMEOUT_ID);
+            }
+            PRICE_CHANGED_TIMEOUT_ID = setTimeout(function () {
+                $.getJSON('{{ route('my_products.calculate_profit') }}?id=' + itemId + '&price=' + value, function (data) {
+                    $(`#profit-value-${itemId}`).text('¥ ' + data.profit);
+                    updateProfitColor($(`#profit-value-${itemId}`), data.profit, data.minimum_profit);
+                });
+            }, 750);
+        }
+
+        function updateProfitColor(element, currentProfit, minimumProfit) {
+            $(element).parent().removeClass('profit-feature-green');
+            $(element).parent().removeClass('profit-feature-red');
+            if (currentProfit >= 0 && (currentProfit >= minimumProfit || minimumProfit === 0)) {
+                $(element).parent().addClass('profit-feature-green');
+            } else {
+                $(element).parent().addClass('profit-feature-red');
+            }
+        }
+
+        function updatePriceAndQuantity(itemId) {
+            $('#button_for_' + itemId).attr('disabled', 'disabled').addClass('btn-loading');
+            $('#price_for_' + itemId).attr('disabled', 'disabled');
+            $('#quantity_for_' + itemId).attr('disabled', 'disabled');
+            var price = $('#price_for_' + itemId).val();
+            var quantity = $('#quantity_for_' + itemId).val();
+
+            $.post('{{ route('my_products.update_price') }}', {price: price, quantity: quantity, id: itemId}, function (response) {
+                $('#button_for_' + itemId).removeAttr('disabled').removeClass('btn-loading');
+                $('#price_for_' + itemId).removeAttr('disabled');
+                $('#quantity_for_' + itemId).removeAttr('disabled');
+                $(`#profit-value-${itemId}`).text('¥ ' + response.profit);
+                $(`#price_for_${itemId}`).val(response.price);
+                updateProfitColor($(`#profit-value-${itemId}`), response.profit, response.minimum_profit);
+            });
+        }
+    </script>
+{% endblock %}
+
+{% block auth_content %}
+    <div class="modal modal-blur fade" id="shipping-fee-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <input type="hidden" name="item_id" value="" />
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ trans('Update Stock Shipping Fee') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">{{ trans('Stock Shipping Fee') }} ¥</label>
+                        <input type="number" class="form-control" name="shipping_fee" value="" onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                        {{ trans('Cancel') }}
+                    </button>
+                    <button onclick="updateShippingFee(this)" class="btn btn-primary ms-auto">
+                        {{ trans('Update') }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="col-12">
+            {{ form_macro.messages() }}
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{ trans('My Products') }}</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table card-table table-vcenter text-nowrap datatable table-bordered table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th style="width: 150px">{{ trans('Image') }}</th>
+                            <th>{{ trans('Title') }}</th>
+                            <th style="width: 130px; text-align: right">¥ {{ trans('Price') }}</th>
+                            <th style="width: 130px; text-align: right">{{ trans('Quantity') }}</th>
+                            <th style="width: 50px;"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for exported_product in exported_products %}
+                            <tr>
+                                <td style="vertical-align: baseline">
+                                    <img src="https://item-shopping.c.yimg.jp/i/g/{{ exported_product.product.image }}" width="100%" />
+                                </td>
+                                <td>
+                                    {{ exported_product.name }}
+                                    <table style="margin-top: 10px; margin-bottom: 10px; font-size: 14px;">
+                                        <tr>
+                                            <th style="padding-left: 0; font-weight: 500">{{ trans('Genre') }}</th>
+                                            <th>:</th>
+                                            <td>{% if exported_product.genre %}{{ exported_product.genre.full_name }}{% endif %}</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="padding-left: 0; font-weight: 500">{{ trans('Rakuten ID') }}</th>
+                                            <th>:</th>
+                                            <td>{{ exported_product.rakuten_id }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="padding-left: 0; font-weight: 500">{{ trans('Auto Stock') }}</th>
+                                            <th>:</th>
+                                            <td>
+                                                {% if exported_product.is_auto_stock_enabled == 1 %}
+                                                    <span class="text-green">{{ trans('Enabled') }}</span> -
+                                                    {% if exported_product.stock_service == 'amazon' %}
+                                                        <a href="https://amazon.co.jp/dp/{{ exported_product.stock_product_code }}" target="_blank">{{ trans('Amazon Product Page') }}</a>
+                                                    {% endif %}
+                                                {% else %}
+                                                    <span class="text-red">Disabled</span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="padding-left: 0; font-weight: 500">{{ trans('Shipping Fee') }}</th>
+                                            <th>:</th>
+                                            <td>¥ {{ exported_product.shipping_fee.fee }} ({{ exported_product.shipping_fee.name }})</span></td>
+                                        </tr>
+                                        {% if exported_product.is_auto_stock_enabled == 1 %}
+                                            <tr>
+                                                <th style="padding-left: 0; font-weight: 500">{{ trans('Stock Price') }}</th>
+                                                <th>:</th>
+                                                <td>
+                                                    ¥ {{ exported_product.stock_price }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th style="padding-left: 0; font-weight: 500">{{ trans('Stock Shipping Fee') }}</th>
+                                                <th>:</th>
+                                                <td>
+                                                    <span id="shipping-fee-{{ exported_product.id }}" data-value="{{ exported_product.stock_shipping_fee }}">¥ {{ exported_product.stock_shipping_fee }}</span>
+                                                    (<a href="javascript:;" onclick="showEditShippingFeeModal({{ exported_product.id }})">{{ trans('Edit') }}</a>)
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    </table>
+                                    <div style="margin: 10px 0;"><a href="{{ route('my_products.auto_stock_setting', {id: exported_product.id}) }}">{{ trans('Change Auto Stock Setting') }}</a></div>
+                                    {% if exported_product.is_auto_stock_enabled == 1 %}
+                                        <div class="features">
+                                            <div class="feature {% if exported_product.profit >= exported_product.minimum_profit.profit %}profit-feature-green{% else %}profit-feature-red{% endif %}">
+                                                <div class="value" id="profit-value-{{ exported_product.id }}">¥ {{ exported_product.profit }}</div>
+                                                <div class="title">{{ trans('Profit') }}</div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td style="text-align: right"><input type="text" class="form-control form-control-sm" id="price_for_{{ exported_product.id }}" style="text-align: right" value="{{ exported_product.price }}" onkeyup="priceChanged({{ exported_product.id }}, this.value)" /></td>
+                                <td style="text-align: right"><input type="text" class="form-control form-control-sm" id="quantity_for_{{ exported_product.id }}" style="text-align: right" value="{{ exported_product.quantity }}" /></td>
+                                <td style="text-align: right">
+                                    <button type="button" id="button_for_{{ exported_product.id }}" class="btn btn-primary btn-sm" onclick="updatePriceAndQuantity('{{ exported_product.id }}')">{{ trans('Update') }}</button>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="4">{{ trans('No record found') }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

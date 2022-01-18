@@ -1,0 +1,85 @@
+{% extends('layouts.admin') %}
+{% import('form_macro') as form_macro %}
+{% set trans_are_you_sure = trans('Are you sure?') %}
+
+{% block title %}
+    {{ trans('Waiting List') }}
+{% endblock %}
+
+{% block auth_content %}
+    <div class="container-fluid">
+        <div class="col-12">
+            {{ form_macro.messages() }}
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{ trans('Waiting List') }}</h3>
+                    <ul class="nav nav-tabs card-header-tabs align-items-center">
+                        <li class="nav-item" style="margin-left: auto">
+                            <div class="btn-group">
+                                <a href="?item_type=draft" type="button" class="btn {% if item_type == 'draft' %}btn-primary{% endif %}">{{ trans('Draft') }}</a>
+                                <a href="?item_type=published" type="button" class="btn {% if item_type == 'published' %}btn-primary{% endif %}">{{ trans('Published') }}</a>
+                                <a href="?item_type=exported" type="button" class="btn {% if item_type == 'exported' %}btn-primary{% endif %}">{{ trans('Exported') }}</a>
+                            </div>
+                        </li>
+                        <li class="nav-item" style="margin-left: 10px;">
+                            <a class="nav-link" href="{{ route('exported_products.export') }}" onclick="return confirm('{{ trans_are_you_sure }}')">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.5 20h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v7.5m-16 -3.5h16m-10 -6v16m4 -1h7m-3 -3l3 3l-3 3" /></svg>
+                                &nbsp;{{ trans('Export') }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="table-responsive">
+                    <table class="table card-table table-vcenter text-nowrap datatable table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>{{ trans('Name') }}</th>
+                            <th style="text-align: right">{{ trans('Price') }}</th>
+                            <th style="text-align: right">{{ trans('Shipping Fee') }}</th>
+                            <th style="text-align: right">{{ trans('Export Status') }}</th>
+                            <th style="width: 50px;"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in products %}
+                            <tr>
+                                <td>
+                                    <div style="font-size: 15px; font-weight: 500">{{ item.name }}</div>
+                                    <span class="text-muted">{{ item.genre.full_name }}</span>
+                                </td>
+                                <td style="text-align: right">¥{{ item.price }}</td>
+                                <td style="text-align: right">¥{{ item.shipping_fee.fee }}</td>
+                                <td style="text-align: right">
+                                    {% if item.is_exported %}
+                                        {% if item.sync_status == 1 %}
+                                            <div class="badge bg-green">{{ trans('Succeeded') }}</div>
+                                        {% elseif item.sync_status == 2 %}
+                                            <div class="badge bg-danger">{{ trans('Failed') }}</div>
+                                        {% else %}
+                                            <div class="badge bg-orange">{{ trans('Waiting for export') }}</div>
+                                        {% endif %}
+                                    {% elseif item.is_published %}
+                                        <div class="badge bg-orange">{{ trans('Waiting for export') }}</div>
+                                    {% else %}
+                                        <div class="badge bg-orange">{{ trans('Waiting for publish') }}</div>
+                                    {% endif %}
+                                </td>
+                                <td style="text-align: right;">
+                                    {% if item.is_exported == 0 %}
+                                        <a href="{{ route('exported_products.save', {id: item.id}) }}">{{ trans('Edit') }}</a>
+                                        <a href="{{ route('exported_products.delete', {id: item.id}) }}" onclick="return confirm('{{ trans_are_you_sure }}');">{{ trans('Delete') }}</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="4">{{ trans('No record found') }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
