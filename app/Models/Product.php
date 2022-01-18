@@ -137,7 +137,7 @@ class Product extends Model
             ->orderBy('min_price')
             ->orderBy('max_price')
             ->first();
-        $profit = 0;
+         $profit = 0;
         if ($minimumProfit instanceof MinimumProfit) {
             $profit = $minimumProfit->profit;
         }

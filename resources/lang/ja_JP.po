@@ -582,6 +582,6 @@ msgstr "設定が保存されました。"
 
 #: app/Http/Controllers/MyProduct/AutoStockSettingController.php:52
 msgid "We could not fetch Amazon product information. Please try again or contact site administrator."
-msgstr "Amazonの商品情報を取得できませんでした。もう一度やり直すか、サイト管理者に連絡してください。 "
+msgstr "Amazonの商品情報を取得できませんでした。もう一度やり直すか、サイト管理者に連絡してください。"
 
 

@@ -16,7 +16,7 @@ class LoginController extends Controller
             ]);
             if (Auth::attempt($validated)) {
                 $request->session()->regenerate();
-                return redirect()->route('home');
+                 return redirect()->route('home');
             }
             return back()->with('error', __('Wrong email or password!'));
         }

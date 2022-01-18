@@ -31,7 +31,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">{{ trans('Service') }}</label>
-                            <select name="stock_service" class="form-select {{ form_macro.showInputInvalid('stock_service') }}">
+                             <select name="stock_service" class="form-select {{ form_macro.showInputInvalid('stock_service') }}">
                                 <option value="">{{ trans('Please select a service') }}</option>
                                 <option value="amazon" {% if old('stock_service', exported_product.stock_service) == 'amazon' %}selected{% endif %}>Amazon</option>
                             </select>

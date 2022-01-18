@@ -43,7 +43,7 @@
                         </div>
 
                         <div class="col-md-6">
-                        
+
                             <fieldset class="form-fieldset">
                             {% if amazon_product %}
                                 <h3>Amazon Product</h3>
@@ -56,7 +56,7 @@
                                 <label>ASIN</label>
                                 <input class="form-control" disabled value="{{amazon_product.asin}}">
                                 {# <label>Shipping</label>
-                                <input class="form-control" disabled value="{{amazon_product.shipping_fee}}"> #}
+                                 <input class="form-control" disabled value="{{amazon_product.shipping_fee}}"> #}
                             {% else %}
                                 <span>{{ trans('No Amazon Product found') }}</span>
                             {% endif %}

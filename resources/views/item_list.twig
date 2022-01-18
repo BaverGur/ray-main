@@ -61,8 +61,8 @@
                                     <td>{{ item.updated_at|date('d M Y H:i:s') }}</td>
                                 </tr>
                             </table>
-                            
-                            <div class="features">
+
+                             <div class="features">
                                 <div class="feature" style="background: green; color: #fff;">
                                     <div class="value">¥{{ item.calculateSellerPrice(auth_user())["calculatedPrice"] }}</div>
                                     <div class="title" style="color: #fff;">{{ trans('Seller Price') }}</div>

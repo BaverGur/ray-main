@@ -14,6 +14,7 @@ class Shipping extends Migration
      */
     public function up()
     {
+        
         Schema::create('shipping_fee', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');

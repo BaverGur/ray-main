@@ -104,7 +104,7 @@ class YahooProductsController extends Controller
             $validated = $validator->validated();
             $history = new LinkImportHistory();
             $history->user_id = Auth::id();
-            $history->type = 'SearchLink';
+             $history->type = 'SearchLink';
             $history->configs = [
                 'link' => $validated['search_link'],
                 'num_of_search_results' => $validated['num_of_search_results']

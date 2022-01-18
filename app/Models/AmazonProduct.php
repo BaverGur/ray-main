@@ -28,6 +28,7 @@ class AmazonProduct extends Model
 {
     protected $table = 'amazon_product';
 
+    
     protected $fillable = [
         'last_update',
         'price'

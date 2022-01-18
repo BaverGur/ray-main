@@ -231,7 +231,7 @@
                                     </table>
                                     <div style="margin: 10px 0;"><a href="{{ route('my_products.auto_stock_setting', {id: exported_product.id}) }}">{{ trans('Change Auto Stock Setting') }}</a></div>
                                     {% if exported_product.is_auto_stock_enabled == 1 %}
-                                        <div class="features">
+                                         <div class="features">
                                             <div class="feature {% if exported_product.profit >= exported_product.minimum_profit.profit %}profit-feature-green{% else %}profit-feature-red{% endif %}">
                                                 <div class="value" id="profit-value-{{ exported_product.id }}">¥ {{ exported_product.profit }}</div>
                                                 <div class="title">{{ trans('Profit') }}</div>

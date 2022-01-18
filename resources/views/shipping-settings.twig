@@ -14,7 +14,7 @@
                         {% if app.request.get('id') > 0 %}{{ trans('Edit Shipping Method Setting') }}{% else %}{{ trans('Create Shipping Method Setting') }}{% endif %}
                     </h3>
                 </div>
-                <form action="" method="post">
+                 <form action="" method="post">
                     {{ csrf_field() }}
                     <div class="card-body">
                         {{ form_macro.messages() }}

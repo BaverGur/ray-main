@@ -6,7 +6,6 @@ use App\Http\Controllers;
 
 Route::get('sellerPriceCheck','App\Http\Controllers\SaveExportedProductController@SaveEmployeeRecord');
 
-
 Route::get('/change-locale/{locale}', function ($locale) {
     Session::put('locale', $locale);
     return redirect()->back();

@@ -52,7 +52,7 @@ class AutoStockSettingController extends Controller
             return redirect()->back()->withInput()->with('success', __(trans('Setting has been saved.')));
         }
         return view('my_products.auto_stock_setting', [
-            'exported_product' => $exportedProduct
+             'exported_product' => $exportedProduct
         ]);
     }
 }

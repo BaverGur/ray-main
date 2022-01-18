@@ -77,7 +77,7 @@ class ExportProduct extends Model
 
     public function getSellerPriceAttribute()
     {
-        $stockPrice = $this->stock_price + $this->stock_shipping_fee;
+         $stockPrice = $this->stock_price + $this->stock_shipping_fee;
         $minimumProfit = MinimumProfit::query()
             ->where('user_id', $this->user->id)
             ->whereRaw('? BETWEEN min_price AND max_price', [$stockPrice])

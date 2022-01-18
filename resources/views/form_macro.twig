@@ -33,7 +33,7 @@
 {% macro textareaField(options) %}
     <div class="mb-3">
         <label class="form-label">{{ options.label }}</label>
-        <textarea class="form-control
+         <textarea class="form-control
             {% if errors.first(options.field) %}is-invalid{% endif %}"
             {% if options.disabled|default(false) %}disabled="disabled"{% endif %}
             placeholder="{{ options.label }}" name="{{ options.field }}" rows="{{ options.rows|default(5) }}"

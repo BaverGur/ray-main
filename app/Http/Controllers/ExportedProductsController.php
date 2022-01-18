@@ -26,7 +26,7 @@ class ExportedProductsController extends Controller
                 ->where('is_exported', 1);
         }
         return view('export_product.search', [
-            'products' => $products->get(),
+             'products' => $products->get(),
             'item_type' => $itemType
         ]);
     }

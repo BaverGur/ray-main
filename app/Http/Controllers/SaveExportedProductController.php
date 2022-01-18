@@ -25,7 +25,7 @@ class SaveExportedProductController extends Controller
     {
         $this->loadProducts($request);
         if ($this->product == null || $this->exportProduct == null) {
-            return redirect()->route('home');
+             return redirect()->route('home');
         }
         $this->amazonProduct = AmazonProduct::query()->where('jan_code', $this->product->jan_code)->first();
         if ($request->isMethod('POST')) {

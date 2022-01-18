@@ -53,7 +53,7 @@ class UsersController extends Controller
                 ]
             );
             if ($validator->fails()) {
-                return redirect()->back()->withInput()->withErrors($validator);
+                 return redirect()->back()->withInput()->withErrors($validator);
             }
             $validated = $validator->validated();
             $user->role = $validated['role'];

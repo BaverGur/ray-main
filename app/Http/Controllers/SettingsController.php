@@ -50,7 +50,7 @@ class SettingsController extends Controller
             $user->name = $validated['name'];
             $user->email = $validated['email'];
             if ($validated['password']) {
-                $user->password = Hash::make($validated['password']);
+                 $user->password = Hash::make($validated['password']);
             }
             $user->yahoo_app_id = $request->get('yahoo_app_id');
             $user->rakuten_rms_secret = $request->get('rakuten_rms_secret');

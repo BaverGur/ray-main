@@ -47,7 +47,7 @@
                                 {% if user_category.id > 0 %}
                                     <option value="{{ old('category_id', user_category.category.id) }}" selected="selected">{{ user_category.category.full_name }}</option>
                                 {% endif %}
-                            </select>
+                             </select>
                             {{ form_macro.showInputError('category_id') }}
                         </div>
                     </div>

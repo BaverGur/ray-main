@@ -54,7 +54,7 @@ class MinimumProfitController extends Controller
                 ->whereRaw('? BETWEEN min_price AND max_price', [$validated['min_price']])
                 ->count();
             if ($isMinPriceExists) {
-                return redirect()->back()->withInput()->with('error', __(trans('Minimum price is already added.')));
+                 return redirect()->back()->withInput()->with('error', __(trans('Minimum price is already added.')));
             }
             $isMaxPriceExists = MinimumProfit::query()
                 ->where('user_id', Auth::id())

@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
 class ShippingFee extends Model
 {
     protected $table = 'shipping_fee';
-    public $timestamps = false;
+     public $timestamps = false;
 
     public function user()
     {
