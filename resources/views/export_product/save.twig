@@ -1,0 +1,238 @@
+{% extends('layouts.admin') %}
+{% import('form_macro') as form_macro %}
+
+{% block title %}{{ trans('Export Product') }}{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+   
+    <script type="text/javascript">
+        $('select[name=shipping_fee_id]').select2();
+        $('select[name=rakuten_genre_id]').select2({
+            ajax: {
+                delay: 250,
+                url: '{{ route('rakuten_genre.ajax_search') }}',
+                dataType: 'json',
+                processResults: function (data) {
+                    return {
+                        results: data.map(function (item) {
+                            return {
+                                id: item.id,
+                                text: `${item.name}`
+                            }
+                        })
+                    };
+                }
+            }
+        });
+
+        $('#productName').keyup(function() {
+            $('#productNameLength').text(this.value.length);
+        });
+    </script>
+{% endblock %}
+
+{% block auth_content %}
+    <div class="container-fluid">
+        <div class="col-12 pb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{ trans('Export Product') }}</h3>
+                </div>
+                <form action="" method="post" id="main_form">
+                    {{ csrf_field() }}
+                    <div class="card-body">
+                        {{ form_macro.messages() }}
+                        <div class="d-flex mb-2">
+                            {% if amazon_product %}
+                                <a target="_blank" href="{{ amazon_product.url }}" style="margin-right: 2px;" class="btn btn-primary">{{ trans('Visit Amazon') }}</a>
+                            {% endif %}
+                            <a target="_blank" href="{{ product.url }}" style="margin-right: 2px;" class="btn btn-primary">{{ trans('Visit Yahoo') }}</a>
+                        </div>
+                        <fieldset class="form-fieldset">
+                            <img src="https://item-shopping.c.yimg.jp/i/g/{{ product.image }}" width="120" style="margin-right: 5px;" />
+                            {% for imageUrl in images %}
+                                <img src="{{ imageUrl }}"  width="120" style="margin-right: 5px;" />
+                            {% else %}
+                                <span>{{ trans('No related images found') }}</span>
+                            {% endfor %}
+                        </fieldset>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <fieldset class="form-fieldset">
+                                    <h3>{#<input type="radio" name="stock_service" value="yahoo" disabled="disabled" /> #} {{trans('Yahoo Product')}}</h3>
+                                    {{ form_macro.textField({label: trans('Name'), field: 'product_name', value: product.name, readonly:'readonly' })  }}
+                                    {{ form_macro.textField({label: trans('Price'), field: 'product_price',  value: product.price, readonly:'readonly'}) }}
+                                    {{ form_macro.textareaField({label: trans('Description'), field: 'product_description',  value: product.description, readonly:'readonly', rows: 10}) }}
+                                </fieldset>
+                            </div>
+
+                            <div class="col-md-6">
+                                <fieldset class="form-fieldset">
+                                    {% if amazon_product %}
+                                        <h3>{#<input type="radio" name="stock_service" value="amazon" checked="checked" /> #}{{trans('Amazon Product')}}</h3>
+                                        {{ form_macro.textField({label: trans('Name'), field: 'amazon_name',  value: amazon_product.name, readonly:'readonly'}) }}
+                                        {{ form_macro.textField({label: trans('Price'), field: 'amazon_price',  value: amazon_product.price + amazon_product.shipping_fee , readonly:'readonly' }) }}
+                                        {{ form_macro.textField({label: trans('Quantity'), field: 'amazon_quantity', value: amazon_product.quantity, readonly:'readonly'}) }}
+                                        {{ form_macro.textField({label: trans('ASIN'), field: 'amazon_asin',  value: amazon_product.asin, readonly:'readonly'}) }}
+                                        {# {{ form_macro.textField({label: trans('Shipping'), field: 'amazon_shipping_fee', value: amazon_product.shipping_fee, readonly:'readonly'}) }} #}
+                                    {% else %}
+                                        <span>{{ trans('No Amazon Product found') }}</span>
+                                    {% endif %}
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        <fieldset class="form-fieldset">
+                            {{ form_macro.textField({label: trans('Name'), id: 'productName', maxLength: 255, field: 'name', value: old('name', export_product.name)}) }}
+                            <div class="counter mb-3" style="font-size: 11px; margin-top: -10px;">{{ trans('Length') }}: <span id="productNameLength">0</span></div>
+                            <div class="mb-3">
+                                <label class="form-label">{{ trans('Genre') }}</label>
+                                <select name="rakuten_genre_id" class="form-select {{ form_macro.showInputInvalid('rakuten_genre_id') }}">
+                                    {% if export_product.rakuten_genre_id > 0 %}
+                                        <option value="{{ old('rakuten_genre_id', export_product.rakuten_genre_id) }}" selected="selected">{{ export_product.genre.full_name }}</option>
+                                    {% endif %}
+                                </select>
+                                {{ form_macro.showInputError('rakuten_genre_id') }}
+                            </div>
+                            {{ form_macro.textField({label: trans('Seller Price'), field: 'price', value: old('price', export_product.price)}) }}
+                            <input type="hidden" id="hidden_seller_price" name="hidden_seller_price" value="0">
+                            
+                            <div class="mb-3">
+                                <label class="form-label">{{ trans('Shipping Fee') }}</label>
+                                <select name="shipping_fee_id" class="form-select {{ form_macro.showInputInvalid('shipping_fee_id') }}" onchange="myFunction($(this).find(':selected').attr('data-select5-id'))">
+                                    <option data-select5-id="0" value="0">{{ trans('Please select a shipping fee.') }}</option>
+                                    {% for shipping_fee in shipping_fees %}
+                                        <option data-select5-id="{{ shipping_fee.fee }}" value="{{ shipping_fee.id }}" {% if old('shipping_fee', export_product.shipping_fee_id) == shipping_fee.id %}selected="selected"{% endif %}>{{ shipping_fee.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                {{ form_macro.showInputError('shipping_fee_id') }}
+                                <div class="text-muted mt-2">{{ trans('Shipping fee will be added into price while adding product to Rakuten.') }}</div>
+                                <div style="padding: 4px; background: #fff; margin-top: 10px;">
+                                  {#  <img src="{{ asset('/assets/shipping_fee_table.png') }}" style="width: 500px;" />
+                              #}
+                                <div class="card">
+               
+                                                <div class="table-responsive">
+                                                    <table class="table card-table table-vcenter text-nowrap datatable table-hover table-striped">
+                                                        <thead>
+                                                        <tr>
+                                                         <th>{{ trans('Height (cm)') }}</th>
+                                                            <th>{{ trans('Width (cm)') }}</th>
+                                                            <th>{{ trans('Depth (cm)') }}</th>
+                                                            <th>{{ trans('Total x+y+z (cm)') }}</th>
+                                                            <th>{{ trans('Kg') }}</th>
+                                                            <th>{{ trans('Shipping Method') }}</th>
+                                                            <th>{{ trans('Fee') }}</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% for shipping_fee in shipping_fees %}
+                                                            <tr>
+                                                                
+                                                                <td>{{ shipping_fee.height }}</td>
+                                                                <td>{{ shipping_fee.width }}</td>
+                                                                 <td>{{ shipping_fee.depth }}</td>
+                                                                <td>{{ shipping_fee.totalDWH }}</td>
+                                                                <td>{{ shipping_fee.kg }}</td>
+                                                                <td>{{ shipping_fee.name }}</td>
+                                                                <td>{{ shipping_fee.fee }}</td>
+                                                            </tr>
+                                                        {% else %}
+                                                            
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+              
+                                 </div>
+
+
+  </div>
+                            </div>
+                            {{ form_macro.textareaField({label: trans('Description'), field: 'description', value: old('description', export_product.description), rows: 10}) }}
+                        </fieldset>
+
+                    </div>
+                    <div class="card-footer">
+                        {% if export_product.id > 0 %}
+                            <div style="margin-bottom: 20px;">
+                                {% if export_product.is_published == 0 %}
+                                    <span class="badge bg-warning">{{ trans('Draft') }}</span>
+                                {% else %}
+                                    <span class="badge bg-success">{{ trans('Published') }}</span>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                        <div class="d-flex justify-content-start align-items-center">
+                            <div>
+                                <button type="submit" class="btn btn-primary">{{ trans('Save') }}</button>
+                            </div>
+                            <div style="margin-left: auto">
+                                <input type="hidden" name="is_published" value="{{ old('is_published', export_product.is_published) }}" />
+                                {% if export_product.is_published == 0 %}
+                                    <button type="button" class="btn btn-success" onclick="$('input[name=is_published]').val(1); $('#main_form').submit();">{{ trans('Publish') }}</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+
+
+ $.ajaxSetup({
+             headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+             }
+         });
+function myFunction(val) {
+   
+   
+amazon_price=$('input[name="amazon_price"]').val();
+$.ajax({
+    url     : '/sellerPriceCheck',
+    data:{'shipping_fee':val,
+           'sellerPrice':amazon_price,
+
+    },
+    type:'get',
+               success:  function (response) {
+                  /* alert(response); */
+                  $('input[name="price"]').val(response);
+               },
+               statusCode: {
+                  404: function() {
+                     alert('web not found');
+                  }
+               },
+               error:function(x,xs,xt){
+                  
+                  alert('error: ' + JSON.stringify(x) +"\n error string: "+ xs + "\n error throwed: " + xt);
+               }
+            
+});
+
+
+/*
+  if($('input[name="hidden_seller_price"]').val() == 0){
+   $('input[name="hidden_seller_price"]').val($("select[name=shipping_fee_id]").find(':selected').attr('data-select5-id'));
+   $('input[name="price"]').val(parseInt($('input[name="price"]').val()) + parseInt(val));
+  }
+  else{
+   $('input[name="price"]').val(parseInt($('input[name="price"]').val()) - parseInt($('input[name="hidden_seller_price"]').val()));
+   $('input[name="price"]').val(parseInt($('input[name="price"]').val()) + parseInt(val));
+   $('input[name="hidden_seller_price"]').val($("select[name=shipping_fee_id]").find(':selected').attr('data-select5-id'));
+  } */
+}
+
+window.addEventListener("load",function(){
+    $('input[name="hidden_seller_price"]').val($("select[name=shipping_fee_id]").find(':selected').attr('data-select5-id'));
+
+},false);
+
+</script>
+{% endblock %}
