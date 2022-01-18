@@ -31,7 +31,7 @@ class ProductParser
         $this->amazonProduct->price = floatval(preg_replace('/[^0-9.]/', '', $this->crawler->filter('#price_inside_buybox')->first()->text()));
         $this->amazonProduct->shippingFee = floatval(preg_replace('/[^0-9.]/', '', $this->crawler->filter('#price-shipping-message span')->first()->text()));
         
-         $dimensionsAll = $this->crawler->filter('#detailBullets_feature_div ul')->first();
+        $dimensionsAll = $this->crawler->filter('#detailBullets_feature_div ul')->first();
         
         if ($dimensionsAll->count() > 0){
             $dimensionsText = $this->crawler->filter('#detailBullets_feature_div ul')->first()->text();
